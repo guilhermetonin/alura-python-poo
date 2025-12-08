@@ -20,9 +20,8 @@ class Restaurante:
     - nome (str): O nome do restaurante.
     - tipo (str): O tipo do restaurante.
     '''
-    self._nome = nome.title() # primeire letra maiuscula
+    self._nome = nome.title() # primeira letra maiúscula
     self._tipo = tipo.title()
-    # atributo protegido
     self._ativo = False
     self._avaliacao = []
     Restaurante.restaurantes.append(self)
