@@ -1,4 +1,5 @@
 from modelos.avaliacao import Avaliacao
+from modelos.cardapio.item_cardapio import ItemCardapio
 
 class Restaurante:
   '''
@@ -24,6 +25,7 @@ class Restaurante:
     self._tipo = tipo.title()
     self._ativo = False
     self._avaliacao = []
+    self._cardapio = []
     Restaurante.restaurantes.append(self)
 
   def __str__(self):
@@ -33,7 +35,7 @@ class Restaurante:
   @classmethod
   def listar_restaurantes(cls):
     '''Exibe uma lista formatada de todos os restaurantes cadastrados.'''
-    print(f'{'NOME DO RESTAURANTE'.ljust(25)} | {'TIPO'.ljust(20)} | {'AVALIAÇÃO'.ljust(20)} | STATUS')
+    print(f'{'Nome do restaurante'.ljust(25)} | {'Tipo'.ljust(20)} | {'Avaliação'.ljust(20)} | Status')
 
     for restaurante in cls.restaurantes:
       print(f'{restaurante._nome.ljust(25)} | {restaurante._tipo.ljust(20)} | {str(restaurante.media_avaliacao).ljust(20)} | {restaurante.ativo}')
@@ -70,3 +72,19 @@ class Restaurante:
     qtde_notas = len(self._avaliacao)
     media = round(soma_notas / qtde_notas, 1)
     return media
+  
+  def adicionar_no_cardapio(self, item):
+    if isinstance(item,ItemCardapio):
+      self._cardapio.append(item)
+
+  @property
+  def exibir_cardapio(self):
+    print(f'\nCardario do Restaurante {self._nome}')
+
+    for i,item in enumerate(self._cardapio,start=1):
+      if hasattr(item,'descricao'):
+        mensagem_prato = f'{i}- Nome: {item._nome} | Descrição: {item.descricao} | Preço: {item._preco}'
+        print(mensagem_prato)
+      else: 
+        mensagem_bebida = f'{i}- Nome: {item._nome} | Tamanho: {item.tamanho} | Preço: {item._preco}'
+        print(mensagem_bebida)
